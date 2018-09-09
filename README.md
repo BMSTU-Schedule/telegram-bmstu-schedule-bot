@@ -1,0 +1,1 @@
+# telegram-bmstu-schedule-bot
