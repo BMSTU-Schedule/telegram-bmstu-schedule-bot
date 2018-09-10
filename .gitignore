@@ -106,5 +106,6 @@ venv.bak/
 # Config files
 config.py
 
-# Dev folders
+# Dev folders and files
 vault/
+logfile.txt
