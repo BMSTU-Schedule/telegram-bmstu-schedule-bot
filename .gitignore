@@ -105,3 +105,6 @@ venv.bak/
 
 # Config files
 config.py
+
+# Dev folders
+vault/
