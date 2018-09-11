@@ -21,7 +21,8 @@ def any_messages(message):
     if (reg.match(message_text) != None):
         dt = datetime.strptime('2018-09-03', '%Y-%m-%d')
         bmstu_schedule.run(message_text, dt, "/Users/lee/Documents/GitHub/telegram-bmstu-schedule-bot/vault")
-        bot.send_message(message.chat.id, text="Получилось!")
+        file_to_send = open('/Users/lee/Documents/GitHub/telegram-bmstu-schedule-bot/vault/Расписание {}Б.ics'.format(message_text), 'rb')
+        bot.send_document(message.chat.id, file_to_send)
     else:
         bot.send_message(message.chat.id, text="Чёт я ничего не нашел для группы '{}'. Если проблема и правда во мне, то напиши @lee_daniil".format(message_text))
 
