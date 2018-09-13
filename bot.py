@@ -16,9 +16,7 @@ schedule_file = '{}Расписание {}.ics'
 @bot.message_handler(commands=['start'])
 def start(message):
     logger(message)
-    bot.send_message(message.chat.id, text='Привет, {} {}!'.format(message.chat.first_name, message.chat.last_name))
-
-
+    bot.send_message(message.chat.id, text='Привет!\nЯ помогу тебе получить твоё расписание в формате,\nудобном для встраивания в любые календари,\nнапример, Google Calendar или macOS Calendar, и еще \nкучу других.\nВ какой группе учишься?')
 
 def group_validator(group_id):
     if reg.match(group_id) != None:
@@ -29,13 +27,12 @@ def group_validator(group_id):
 def file_exist(file_name):
     return os.path.isfile(schedule_file.format(path_to_vault,file_name))
 
-
-
 @bot.message_handler(content_types=['text'])
 def any_messages(message):
     logger(message)
 
     if group_validator(message.text):
+        message.text = message.text.upper()
         bot.send_message(message.chat.id, text='Пошел искать расписание для группы {}'.format(message.text))
 
         if file_exist(message.text):
@@ -46,9 +43,9 @@ def any_messages(message):
                 file_to_send = open(schedule_file.format(path_to_vault, message.text), 'rb')
             else:
                 if message.text[len(message.text)-1].isnumeric():
-                    bot.send_message(message.chat.id, text='Чёт я ничего не нашел для группы {}. Если проблема и правда во мне, то напиши @gabolaev'.format(message.text))
+                    bot.send_message(message.chat.id, text="Эээ, кажется, кто-то не уточнил тип своей группы (Б/М/А). Давай добавим соответствующую букву в конце и попробуем еще раз. Например {}Б".format(message.text))
                     return
-                bot.send_message(message.chat.id, text="Эээ, кажется, кто-то не уточнил тип своей группы (Б/М/А). Давай добавим соответствующую букву в конце и попробуем еще раз. Например {}Б".format(message.text))
+                bot.send_message(message.chat.id, text='Чёт я ничего не нашел для группы {}. Если проблема и правда во мне, то напиши @gabolaev'.format(message.text))
                 return
         
         bot.send_document(message.chat.id, file_to_send)

@@ -2,15 +2,21 @@ import datetime
 from config import config
 import telebot
 
+log_form = "{} | {} {}({}) sent: '{}'"
+
+def log_file(msg):
+    file = open("logfile.txt", "a")
+    file.write(str(msg) + "\n")
+    file.close()
 
 def logger(msg):
     if (type(msg) is telebot.types.Message):
-        logData = datetime.datetime.now().strftime("%H:%M:%S | %d.%m.%Y")
-        log = config.logForm.format(logData, msg.chat.first_name, msg.chat.last_name, msg.chat.username,msg.text)
+        log_data = datetime.datetime.now().strftime("%H:%M:%S | %d.%m.%Y")
+        log = log_form.format(log_data, msg.chat.first_name, msg.chat.last_name, msg.chat.username,msg.text)
     else:
         log = msg
     try:
         print(log)
-        config.logFile(log)
+        log_file(log)
     except Exception as ex:
-        config.logFile(msg=ex)
+        log_file(msg=ex)
