@@ -19,10 +19,7 @@ def start(message):
     bot.send_message(message.chat.id, text='Привет!\nЯ помогу тебе получить твоё расписание в формате,\nудобном для встраивания в любые календари,\nнапример, Google Calendar или macOS Calendar, и еще \nкучу других.\nВ какой группе учишься?')
 
 def group_validator(group_id):
-    if reg.match(group_id) != None:
-        return True
-    else:
-        return False
+    return reg.match(group_id) != None
 
 def file_exist(file_name):
     return os.path.isfile(schedule_file.format(path_to_vault,file_name))
