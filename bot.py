@@ -43,10 +43,10 @@ def any_messages(message):
 
             if file_exist(message.text):
                 file_to_send = open(schedule_file.format(path_to_vault, message.text), 'rb')
-            else:
-                if message.text[len(message.text)-1].isnumeric():
+            elif message.text[len(message.text)-1].isnumeric():
                     bot.send_message(message.chat.id, text="Эээ, кажется, кто-то не уточнил тип своей группы (Б/М/А). Давай добавим соответствующую букву в конце и попробуем еще раз. Например {}Б".format(message.text))
                     return
+                return
         
         bot.send_document(message.chat.id, file_to_send)
         bot.send_message(message.chat.id, text='Тадам!')
