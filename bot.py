@@ -35,15 +35,18 @@ def any_messages(message):
         if file_exist(message.text):
             file_to_send = open(schedule_file.format(path_to_vault, message.text), 'rb')
         else:
-            bmstu_schedule.run(message.text, dt, path_to_vault)
+            try:
+                bmstu_schedule.run(message.text, dt, path_to_vault)
+            except SystemExit as ex:
+                bot.send_message(message.chat.id, text='Чёт я ничего не нашел для группы {}. Если проблема и правда во мне, то напиши @lee_daniil'.format(message.text))
+                return
+
             if file_exist(message.text):
                 file_to_send = open(schedule_file.format(path_to_vault, message.text), 'rb')
             else:
                 if message.text[len(message.text)-1].isnumeric():
                     bot.send_message(message.chat.id, text="Эээ, кажется, кто-то не уточнил тип своей группы (Б/М/А). Давай добавим соответствующую букву в конце и попробуем еще раз. Например {}Б".format(message.text))
                     return
-                bot.send_message(message.chat.id, text='Чёт я ничего не нашел для группы {}. Если проблема и правда во мне, то напиши @gabolaev'.format(message.text))
-                return
         
         bot.send_document(message.chat.id, file_to_send)
         bot.send_message(message.chat.id, text='Тадам!')
