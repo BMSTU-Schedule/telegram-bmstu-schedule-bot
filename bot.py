@@ -46,7 +46,7 @@ def any_messages(message):
             elif message.text[len(message.text)-1].isnumeric():
                     bot.send_message(message.chat.id, text="Эээ, кажется, кто-то не уточнил тип своей группы (Б/М/А). Давай добавим соответствующую букву в конце и попробуем еще раз. Например {}Б".format(message.text))
                     return
-                return
+            return
         
         bot.send_document(message.chat.id, file_to_send)
         bot.send_message(message.chat.id, text='Тадам!')
@@ -60,3 +60,4 @@ if __name__ == '__main__':
         bot.polling(none_stop=True, timeout=30)
     except Exception as ex:
         pass
+        
