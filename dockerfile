@@ -1,8 +1,6 @@
 FROM ubuntu:18.04
 LABEL author='Daniel Lee'
 
-ENV REPO=github.com/BMSTU-bots/telegram-bmstu-schedule-bot
-
 # Basic tools and configurations
 RUN apt update
 RUN apt install -y git vim wget curl locales
@@ -16,6 +14,5 @@ RUN apt install -y python3 python3-pip
 RUN pip3 install bmstu-schedule pyTelegramBotAPI
 
 # bot moving
-ADD . /telegram-bmstu-schedule-bot
-WORKDIR /telegram-bmstu-schedule-bot
-RUN python3 bot.py
+ADD . /home/telegram-bmstu-schedule-bot
+WORKDIR /home/telegram-bmstu-schedule-bot

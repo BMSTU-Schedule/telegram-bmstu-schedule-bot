@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3/
 import bmstu_schedule
-from config.config import access_token, path_to_vault
+from config import access_token, path_to_vault
 from datetime import datetime
 from logger.logger import logger
 import os.path
@@ -10,7 +10,7 @@ import telebot
 bot = telebot.TeleBot(access_token)
 reg = re.compile('^[а-яА-Я]{1,4}\d{0,2}\-\d{0,3}[а-яА-Я]?$')
 dt = datetime.strptime('2018-09-03', '%Y-%m-%d')
-schedule_file = '{}Расписание {}.ics'
+schedule_file = '{}/Расписание {}.ics'
 
 @bot.message_handler(commands=['start'])
 def start(message):

@@ -1,5 +1,5 @@
+import config
 import datetime
-from config import config
 import telebot
 
 log_form = "{} | {} {}({}) sent: '{}'"
