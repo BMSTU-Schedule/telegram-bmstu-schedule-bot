@@ -104,9 +104,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# Config files
-config.py
-
 # Dev folders and files
 vault/
 logfile.txt
