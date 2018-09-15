@@ -16,3 +16,4 @@ RUN pip3 install bmstu-schedule pyTelegramBotAPI
 # bot moving
 ADD . /home/telegram-bmstu-schedule-bot
 WORKDIR /home/telegram-bmstu-schedule-bot
+RUN mkdir vault/
