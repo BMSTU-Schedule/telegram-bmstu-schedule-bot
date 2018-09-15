@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3/
 import bmstu_schedule
-from config.config import access_token
+from config.config import access_token, path_to_vault
 from datetime import datetime
 from logger.logger import logger
 import os.path
@@ -9,7 +9,6 @@ import telebot
 
 bot = telebot.TeleBot(access_token)
 reg = re.compile('^[а-яА-Я]{1,4}\d{0,2}\-\d{0,3}[а-яА-Я]?$')
-path_to_vault = '/Users/lee/Documents/GitHub/telegram-bmstu-schedule-bot/vault/'
 dt = datetime.strptime('2018-09-03', '%Y-%m-%d')
 schedule_file = '{}Расписание {}.ics'
 
@@ -38,7 +37,7 @@ def any_messages(message):
             try:
                 bmstu_schedule.run(message.text, dt, path_to_vault)
             except SystemExit as ex:
-                bot.send_message(message.chat.id, text='Чёт я ничего не нашел для группы {}. Если проблема и правда во мне, то напиши @lee_daniil'.format(message.text))
+                bot.send_message(message.chat.id, text='Чёт я ничего не нашел для группы {}. Если проблема и правда во мне, то напиши @lee_daniil или @gabolaev'.format(message.text))
                 return
 
             if file_exist(message.text):
@@ -50,7 +49,7 @@ def any_messages(message):
         
         bot.send_document(message.chat.id, file_to_send)
         bot.send_message(message.chat.id, text='Тадам!')
-        bot.send_message(message.chat.id, text='Если вдруг будут проблемы при импорте в календарь, можешь обращаться к @lee_daniil')
+        bot.send_message(message.chat.id, text='Если вдруг будут проблемы при импорте в календарь, можешь обращаться к @lee_daniil или @gabolaev')
     else:
         bot.send_message(message.chat.id, text='Указан неверный формат номера группы.')
 
