@@ -8,7 +8,7 @@ import re
 import telebot
 
 bot = telebot.TeleBot(access_token)
-reg = re.compile('^[а-яА-Я]{1,4}\d{0,2}\-\d{0,2}[а-яА-Я]?$')
+reg = re.compile('^[а-яА-Я]{1,4}\d{0,2}\-\d{0,3}[а-яА-Я]?$')
 path_to_vault = '/Users/lee/Documents/GitHub/telegram-bmstu-schedule-bot/vault/'
 dt = datetime.strptime('2018-09-03', '%Y-%m-%d')
 schedule_file = '{}Расписание {}.ics'
