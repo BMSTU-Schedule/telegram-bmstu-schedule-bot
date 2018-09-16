@@ -26,6 +26,7 @@ def file_exist(file_name):
 @bot.message_handler(content_types=['text'])
 def any_messages(message):
     logger(message)
+    file_to_send = ''
 
     if group_validator(message.text):
         message.text = message.text.upper()
@@ -45,7 +46,11 @@ def any_messages(message):
             elif message.text[len(message.text)-1].isnumeric():
                     bot.send_message(message.chat.id, text="Эээ, кажется, кто-то не уточнил тип своей группы (Б/М/А). Давай добавим соответствующую букву в конце и попробуем еще раз. Например {}Б".format(message.text))
                     return
+    else:
+        bot.send_message(message.chat.id, text='Указан неверный формат номера группы.')
+        return
         
+    if file_to_send:
         bot.send_document(message.chat.id, file_to_send)
         bot.send_message(message.chat.id, text='Тадам!')
         bot.send_message(message.chat.id, text='Если вдруг будут проблемы при импорте в календарь, можешь обращаться к @lee_daniil или @gabolaev')
