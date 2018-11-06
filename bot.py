@@ -79,6 +79,9 @@ def any_messages(message):
         if file_exist(SCHEDULE_ICS.format(VAULT_PATH, message.text)):
             ics_to_send = open(SCHEDULE_ICS.format(
                 VAULT_PATH, message.text), 'rb')
+            if file_exist(SCHEDULE_PNG.format(VAULT_PATH, message.text)):
+            png_to_send = open(SCHEDULE_PNG.format(
+                VAULT_PATH, message.text), 'rb')
         elif message.text[len(message.text)-1].isnumeric():
             BOT.send_message(
                 message.chat.id, text=(
