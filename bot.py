@@ -91,7 +91,7 @@ def any_messages(message):
     if ics_to_send:
         BOT.send_document(message.chat.id, ics_to_send)
         if png_to_send:
-            BOT.send_document(message.chat.id, png_to_send)
+            BOT.send_photo(message.chat.id, png_to_send)
         BOT.send_message(message.chat.id, text='Тадам!')
         BOT.send_message(
             message.chat.id, text=(
