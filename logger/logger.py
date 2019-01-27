@@ -5,9 +5,8 @@ import telebot
 log_form = "{} | {} {}({}) sent: '{}'"
 
 def log_file(msg):
-    file = open("logfile.txt", "a")
-    file.write(str(msg) + "\n")
-    file.close()
+    with open("logfile.txt", "a") as file:
+        file.write(str(msg) + "\n")
 
 def logger(msg):
     if (type(msg) is telebot.types.Message):
