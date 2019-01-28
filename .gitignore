@@ -109,3 +109,4 @@ vault/
 logfile.txt
 config.json
 dialogue.json
+handlers2.py
