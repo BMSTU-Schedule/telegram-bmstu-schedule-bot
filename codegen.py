@@ -13,7 +13,7 @@ with open(CONFIG['dialogue'], 'r') as f:
 handlers_content = '\'\'\'\nGenerated handlers from dialogue.json\n\'\'\'\n' \
                     'import random\n' \
                     'from bot import BOT\n' \
-                    'from logger.logger import logger\n\n' 
+                    'from logger import logger\n\n' 
 
 decorator_pattern = '@BOT.message_handler(regexp="{}")\n' \
                     'def func{}(message):\n' \

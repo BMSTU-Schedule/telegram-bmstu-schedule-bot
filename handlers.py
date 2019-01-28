@@ -2,11 +2,12 @@
 Custom handlers file
 '''
 
+import os.path
+
 import bmstu_schedule
 from bot import BOT
 from config import CONFIG, SCHEDULE_ICS, SCHEDULE_PNG, DT, GC_REG_MATCHER
-from logger.logger import logger
-from utils import file_exist
+from logger import logger
 
 @BOT.message_handler(commands=['start'])
 def start(message):
@@ -64,3 +65,5 @@ def any_messages(message):
     else:
         BOT.send_message(message.chat.id, text='Мне нужен номер группы, чтобы дать тебе расписание. Например, иу6-54б')
 
+def file_exist(file_path):
+    return os.path.isfile(file_path)
