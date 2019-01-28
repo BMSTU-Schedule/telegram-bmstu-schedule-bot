@@ -1,5 +1,5 @@
 '''
-Custom handlers for bot messages
+Custom handlers file
 '''
 
 import bmstu_schedule
