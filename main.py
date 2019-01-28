@@ -1,5 +1,6 @@
 import urllib3
 
+import codegen
 import handlers2 # it is important to import handlers2 before handlers
 import handlers
 from bot import BOT
