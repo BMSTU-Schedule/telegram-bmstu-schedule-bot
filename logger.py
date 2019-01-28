@@ -1,3 +1,7 @@
+'''
+Logger file
+'''
+
 import datetime
 import telebot
 
