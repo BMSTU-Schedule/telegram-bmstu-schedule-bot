@@ -7,15 +7,15 @@ RUN apt install -y git vim wget curl locales screen
 RUN locale-gen en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
-# python installations
+# Python installing
 RUN apt install -y python3 python3-pip
 
-# libs installation
-RUN pip3 install bmstu-schedule pyTelegramBotAPI
-
-# bot moving
+# Bot moving
 ADD . /home/telegram-bmstu-schedule-bot
 WORKDIR /home/telegram-bmstu-schedule-bot
 
-# run handlers generator
+# Libs installation
+RUN pip3 install -r requirements.txt
+
+# Running handlers generator
 RUN python3 codegen.py
