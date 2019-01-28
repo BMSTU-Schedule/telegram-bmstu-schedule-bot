@@ -16,6 +16,3 @@ WORKDIR /home/telegram-bmstu-schedule-bot
 
 # Libs installation
 RUN pip3 install -r requirements.txt
-
-# Running handlers generator
-RUN python3 codegen.py
