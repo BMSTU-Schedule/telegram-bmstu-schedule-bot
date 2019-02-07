@@ -106,7 +106,7 @@ venv.bak/
 
 # Dev folders and files
 vault/
-logfile.txt
+log/
 config.json
 dialogue.json
 handlers2.py

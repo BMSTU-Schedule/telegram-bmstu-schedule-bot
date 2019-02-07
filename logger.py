@@ -4,12 +4,18 @@ Logger file
 
 import datetime
 import telebot
+import os
 
-message_log_fmt = "{} - {} {}[{}] sent: '{}'"
+from config import CONFIG
+
+message_log_fmt = "{} - [MESSAGE]{} {}[{}] sent: '{}'"
 common_log_fmt = "{} - [INFO]: {}"
 
+log_file_path = CONFIG["logfile"]
+os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
+
 def log_file(msg):
-    with open("logfile.txt", "a") as file:
+    with open(log_file_path, "a") as file:
         file.write(str(msg) + "\n")
 
 def logger(msg):
