@@ -8,10 +8,11 @@ import os
 
 from config import CONFIG
 
-message_log_fmt = "{} - [MESSAGE]{} {}[{}] sent: '{}'"
+message_log_fmt = "{} - [MESSAGE]: {} {}[{}] sent: '{}'"
 common_log_fmt = "{} - [INFO]: {}"
 
-log_file_path = CONFIG["logfile"]
+current_date = datetime.datetime.now().strftime("%d.%m.%Y")
+log_file_path = CONFIG["logfile"].format(current_date)
 os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
 
 def log_file(msg):
