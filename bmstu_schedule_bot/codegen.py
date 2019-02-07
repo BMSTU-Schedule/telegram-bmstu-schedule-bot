@@ -4,25 +4,25 @@ Code generation file
 
 import json
 import hashlib
-from config import CONFIG
+from bmstu_schedule_bot import configs
 
 answers = {}
-with open(CONFIG['dialogue'], 'r') as f:
-    answers = json.loads(f.read())
+with open(configs.CONFIG['dialogue'], 'r') as file:
+    answers = json.loads(file.read())
 
 handlers_content = '\'\'\'\nGenerated handlers from dialogue.json\n\'\'\'\n' \
                     'import random\n' \
-                    'from bot import BOT\n' \
-                    'from logger import logger\n\n' 
+                    'from bmstu_schedule_bot import BOT\n' \
+                    'from bmstu_schedule_bot.logger import logger\n\n' 
 
-decorator_pattern = '@BOT.message_handler(regexp="{}")\n' \
+decorator_pattern = '@BOT.message_handler(regexp=\'{}\')\n' \
                     'def func{}(message):\n' \
-                    '\tlogger(message)\n' \
+                    '\tlogger.log(message)\n' \
                     '\tBOT.send_message(message.chat.id, text=random.SystemRandom().choice({}))\n\n'
 
 
 for key, value in answers.items():
     handlers_content += decorator_pattern.format(key, hashlib.sha224(key.encode()).hexdigest(), value)
 
-with open('handlers2.py', 'w') as f:
-    f.write(handlers_content)
+with open('bmstu_schedule_bot/handlers2.py', 'w') as file:
+    file.write(handlers_content)

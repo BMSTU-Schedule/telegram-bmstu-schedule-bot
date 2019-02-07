@@ -1,16 +1,15 @@
 import urllib3
+import os
 
-import codegen
-import handlers2 # it is important to import handlers2 before handlers
-import handlers
-from bot import BOT
-from logger import logger
+from bmstu_schedule_bot import logger, BOT
 
 if __name__ == '__main__':
     try:
-        logger("Bot is running")
+        logger.log('Bot is starting up')
         BOT.polling(none_stop=True, timeout=30)
-    except urllib3.exceptions.ReadTimeoutError:
-        logger("Telegram API Error")
+    except urllib3.exceptions.ReadTimeoutError as e:
+        logger.log(e)
+    except Exception as e:
+        logger.log(e)
     finally:
-        logger("Bot is shutting down")
+        logger.log('Bot is shutting down')
