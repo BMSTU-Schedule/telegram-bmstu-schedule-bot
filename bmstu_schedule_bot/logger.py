@@ -10,13 +10,25 @@ from bmstu_schedule_bot import configs
 
 class Logger:
 	def __init__(self, path):
-		self.path_to_file = path
+		self.path_to_log_dir = path
 		self.message_log_fmt = '{} - [MESSAGE]: {} {} [{}] sent: "{}"'
 		self.error_log_fmt = '{} - [ERROR]: {}'
 		self.info_log_fmt = '{} - [INFO]: {}'
 	
+	def _create_path(self, logfile):
+		if len(self.path_to_log_dir) != 0:
+			if self.path_to_log_dir[len(self.path_to_log_dir)-1] == '/':
+				return self.path_to_log_dir + logfile
+			return self.path_to_log_dir + '/' + logfile
+
+	def _update_logfile_path(self):
+		current_date = datetime.datetime.now().strftime('%d.%m.%Y') + '.txt'
+		self.path_to_logfile = self._create_path(current_date)
+		os.makedirs(os.path.dirname(self.path_to_logfile), exist_ok=True)
+
 	def _write(self, msg):
-		with open(self.path_to_file, 'a') as file:
+		self._update_logfile_path()
+		with open(self.path_to_logfile, 'a') as file:
 			file.write(msg + "\n")
 			print(msg)
 
@@ -33,9 +45,4 @@ class Logger:
 		self._write(log_message)
 
 
-# Creating folder "/%path%/log" if not exist and creating logfile, which is named "%current_date%.txt"
-current_date = datetime.datetime.now().strftime('%d.%m.%Y')
-log_file_path = configs.CONFIG['logfile'].format(current_date)
-os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
-
-logger = Logger(log_file_path)
+logger = Logger(configs.CONFIG['logfile'])
