@@ -23,12 +23,12 @@ def start(message):
 @BOT.message_handler(regexp='([вВ]рач|клиник|[дД]окто|[тТ]ерапе|[бБ]оле[юл])')
 def doctor(message):
 	logger.log(message)
-	if is_file_exists(configs.CONFIG['doctor']):
-		with open(configs.CONFIG['doctor'], 'rb') as jpeg:
-			BOT.send_photo(message.chat.id, jpeg)
-			BOT.send_message(message.chat.id, text='Не болей только(')
-	else:
-		BOT.send_message(message.chat.id, text='Расписания врачей у меня временно нет...')
+    if is_file_exists(configs.CONFIG['doctors']):
+        with open(configs.CONFIG['doctors'], 'rb') as jpeg:
+            BOT.send_photo(message.chat.id, jpeg)
+            BOT.send_message(message.chat.id, text='Не болей только(')
+    else:
+        BOT.send_message(message.chat.id, text='Расписания врачей у меня временно нет...')
 
 @BOT.message_handler(content_types=['text'])
 def any_messages(message):
@@ -104,7 +104,7 @@ def send_choose_group_type_error_msg(chat_id, group, available):
     for item in available:
         item = group.name + item
 
-    msg = "Уточни, пожалуйста, какую из этих групп ты имеешь в виду: {}?", ", ".join(available)
+    msg = "Уточни, пожалуйста, какую из этих групп ты имеешь в виду: {}?".format(", ".join(available))
     BOT.send_message(chat_id, text=msg)
 
 def send_schedule(chat_id, group):
