@@ -41,8 +41,8 @@ def any_messages(message):
     group = schedule.parse_group(message.text)
     if group is None:
         bot.send_message(message.chat.id, text=(
-                'Мне нужен номер группы, чтобы дать тебе расписание. '
-                'Например, иу6-64б'))
+                'Мне нужен номер группы, чтобы дать тебе расписание, '
+                'например, иу6-64. Либо специальная команда'))
         return
 
     bot.send_message(message.chat.id, text='Уже ищу твое расписание...')
