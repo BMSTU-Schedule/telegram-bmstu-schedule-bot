@@ -42,7 +42,7 @@ def any_messages(message):
     if group is None:
         bot.send_message(message.chat.id, text=(
                 'Мне нужен номер группы, чтобы дать тебе расписание, '
-                'например, иу6-64. Либо специальная команда'))
+                'например, иу6-64. Либо напиши "врачи"'))
         return
 
     bot.send_message(message.chat.id, text='Уже ищу твое расписание...')
