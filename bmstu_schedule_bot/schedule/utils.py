@@ -11,4 +11,5 @@ def get_available_types(vault_path, group):
         if regexp.match(file):
             gr_type = file[len(group):len(group)+1]
             types.append(gr_type) if gr_type != '.' else types.append('')
+            
     return types

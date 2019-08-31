@@ -1,5 +1,5 @@
 beautifulsoup4==4.6.3
-bmstu-schedule==1.2.3
+bmstu-schedule
 bs4==0.0.1
 certifi==2018.11.29
 chardet==3.0.4

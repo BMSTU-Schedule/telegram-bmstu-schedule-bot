@@ -1,5 +1,6 @@
 import re
 
+
 GROUP_CODE_REGEX = r'^[а-яА-Я]{1,4}\d{0,2}\-\d{1,3}[а-яА-Я]?$'
 GC_REG_MATCHER = re.compile(GROUP_CODE_REGEX)
 
@@ -18,15 +19,17 @@ class Group:
     def get(self):
         return self.name + self.group_type
 
+    @classmethod
+    def parse_group(cls, text):
+        if GC_REG_MATCHER.match(text):
+            text = text.upper()
 
-def parse_group(text):
-    if GC_REG_MATCHER.match(text):
-        text = text.upper()
-        group = Group()
-        if text[len(text)-1].isalpha():
-            group.name = text[:len(text)-1]
-            group.group_type = text[len(text)-1:]
-        else:
-            group.name = text
-        return group
-    return
+            group = Group()
+
+            if text[len(text)-1].isalpha():
+                group.name = text[:len(text)-1]
+                group.group_type = text[len(text)-1:]
+            else:
+                group.name = text
+
+            return group
