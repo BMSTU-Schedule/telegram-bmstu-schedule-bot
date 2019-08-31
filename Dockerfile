@@ -16,6 +16,6 @@ ENV LC_ALL=en_US.UTF-8
 WORKDIR /home/telegram-bmstu-schedule-bot
 
 ADD requirements.txt .
-RUN pip3 install -r requirements.txt
+RUN pip3 install --no-cache-dir -Ur requirements.txt
 
 ADD . .
