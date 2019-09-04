@@ -103,10 +103,3 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-
-# Dev folders and files
-vault/
-log/
-config.json
-dialogue.json
-handlers2.py
