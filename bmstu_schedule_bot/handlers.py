@@ -1,10 +1,10 @@
-import bmstu_schedule
 import json
 import logging
 import os
 import random
 
 
+from helpers import download_schedule, send_also_available_groups_msg, send_choose_group_type_error_msg, send_schedule
 import replies
 
 
@@ -91,72 +91,28 @@ def register_group_parser_handler(bot, config):
 
         path_to_ics = make_path(config['VAULT_PATH'], group.get(), '.ics')
 
-        if not is_file_exists(path_to_ics):
-            if not download_schedule(
-                    group=group, 
-                    api_url=config['BMSTU_SCHEDULE_API'], 
-                    path=config['VAULT_PATH']):
 
-                bot.send_message(chat_id, text=replies.GROUP_NOT_FOUND.format(group.get()))
-                return
-
-        if not group.has_type():
+        if group.has_type():
+            if not is_file_exists(path_to_ics):
+                try:
+                    download_schedule(group, config['BMSTU_SCHEDULE_API'], config['VAULT_PATH'])
+                except SystemExit:
+                    bot.send_message(message.chat.id, text=replies.GROUP_NOT_FOUND.format(group.get()))
+                    return
+        else:
             available_types = get_available_types(config['VAULT_PATH'], group.get())
 
             if len(available_types) == 0:
-                bot.send_message(chat_id, text=replies.GROUP_IS_NOT_DEFINED.format(group.get()))
+                bot.send_message(message.chat.id, text=replies.GROUP_IS_NOT_DEFINED.format(group.get()))
                 return
 
             if len(available_types) == 1:
                 group.group_type = available_types[0]
-            elif is_file_exists(path_to_ics):
-                send_also_available_groups_msg(bot, message.chat.id, group, available_types)
             else:
-                send_choose_group_type_error_msg(bot, message.chat.id, group, available_types)
-                return
+                if is_file_exists(path_to_ics):
+                    send_also_available_groups_msg(bot, message.chat.id, group, available_types)
+                else:
+                    send_choose_group_type_error_msg(bot, message.chat.id, group, available_types)
+                    return
 
         send_schedule(bot, message.chat.id, group.get(), config['VAULT_PATH'])
-
-
-def download_schedule(group, api_url, path):
-    try:
-        sem_start_date = get_sem_start_date(api_url)
-        bmstu_schedule.run(group.get(), sem_start_date, path)
-        return True
-    except SystemExit:
-        return False
-
-
-def send_also_available_groups_msg(bot, chat_id, group, available):
-    groups = []
-    for item in available:
-        if item != group.group_type and item != '':
-            groups.append(group.name + item)
-    ending = 'а' if len(groups) == 1 else 'ы'
-
-    bot.send_message(chat_id, text=(
-        'Скидываю расписание для {}. '
-        'Также у меня есть групп{} {}'.format(
-            group, ending, ', '.join(groups))))
-
-
-def send_choose_group_type_error_msg(bot, chat_id, group, available):
-    for item in available:
-        item = group.name + item
-
-    bot.send_message(chat_id, text=(
-        'Уточни, пожалуйста, какую из этих групп '
-        'ты имеешь в виду: {}?'.format(', '.join(available))))
-
-
-def send_schedule(bot, chat_id, group, path):
-    with open(make_path(path, group, '.ics'), 'rb') as ics:
-        bot.send_document(chat_id, ics)
-
-        try:
-            with open(make_path(path, group, '.png'), 'rb') as png:
-                bot.send_photo(chat_id, png)
-        except FileNotFoundError as ex:
-            log.error(ex)
-
-        bot.send_message(chat_id, text='Тадам!')
